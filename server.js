@@ -14,18 +14,26 @@ const client = new OpenAI({
 });
 
 app.post("/chat", async (req, res) => {
-  const message = req.body.message;
+  try {
+    const message = req.body.message;
 
-  const response = await client.responses.create({
-    model: "gpt-4.1-mini",
-    input: message
-  });
+    const response = await client.responses.create({
+      model: "gpt-4.1-mini",
+      input: message
+    });
 
-  res.json({
-    reply: response.output[0]?.content[0]?.text
-  });
+    res.json({
+      reply: response.output?.[0]?.content?.[0]?.text || "no response"
+    });
+
+  } catch (err) {
+    console.error("ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
-app.listen(10000, () => {
-  console.log("Server attivo");
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log("Server running on", port);
 });
