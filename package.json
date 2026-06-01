@@ -1,4 +1,4 @@
-{
+{{
   "name": "chatbot-backend",
   "version": "1.0.0",
   "type": "module",
@@ -12,3 +12,4 @@
     "openai": "^4.0.0"
   }
 }
+  
